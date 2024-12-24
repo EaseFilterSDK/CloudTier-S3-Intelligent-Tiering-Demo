@@ -1,4 +1,4 @@
-# CloudTier S3 Intelligent-Tiering Storage demo
+# CloudTier S3 Intelligent-Tiering demo
 The CloudTier SDK integrates S3 Intelligent-Tiering cloud storage with on-premise storage systems seamlessly, creating a hybrid storage environment.  So it allows on-premise applications to access S3 file objects transparently, just as they would access on-premise regular files. There is no interruption to move or restore your on-premise files to/from the cloud storage, so you don’t need to change your existing applications and infrastructure to be compatible with the cloud environment.
 
 The CloudTier S3 demo is a C# demo project, it demonstrates how to connect the S3 storage from your on-premise storage, and how to generate the test files in on-premise storage and S3 storage. It demonstrates how to browse and read the S3 files as a local regular files.
@@ -19,8 +19,6 @@ A stub file looks and acts like a regular file. It has the same file attributes 
 7.	To browse the files in s3 or upload/download the files to/from S3, you can go to the S3 explorer. After the files were uploaded to the S3, then you can create the stub file from the S3 explorer.
 ![S3 File Explorer](https://www.easefilter.com/images/s3explorer.png)
 8.	Read the S3 files: after the files were uploaded to the S3 cloud storage, you can replace your original file with the stub file based on your retention policies. You can create S3 stub file in S3 explorer. For example, to read the stub file by copying the stub file to another folder, you will see the S3 file will be downloaded to the cache folder from the S3 storage, after that the cache file will be returned to your local file system through the CloudTier filter driver, then the read request to the S3 file will be completed successfully. 
-
-
 
 ## EaseFilter File System Filter Driver SDK Reference
 | Product Name | Description |
