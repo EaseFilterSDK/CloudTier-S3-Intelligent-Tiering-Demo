@@ -1,5 +1,5 @@
 # CloudTier S3 Intelligent-Tiering demo
-The CloudTier SDK integrates S3 Intelligent-Tiering cloud storage with on-premise storage systems seamlessly, creating a hybrid storage environment.  So it allows on-premise applications to access S3 file objects transparently, just as they would access on-premise regular files. There is no interruption to move or restore your on-premise files to/from the cloud storage, so you don’t need to change your existing applications and infrastructure to be compatible with the cloud environment.
+The [CloudTier Storage Tiering SDK](https://www.easefilter.com/cloud/storage-tiering-sdk.htm) integrates S3 Intelligent-Tiering cloud storage with on-premise storage systems seamlessly, creating a hybrid storage environment.  So it allows on-premise applications to access S3 file objects transparently, just as they would access on-premise regular files. There is no interruption to move or restore your on-premise files to/from the cloud storage, so you don’t need to change your existing applications and infrastructure to be compatible with the cloud environment.
 
 The CloudTier S3 demo is a C# demo project, it demonstrates how to connect the S3 storage from your on-premise storage, and how to generate the test files in on-premise storage and S3 storage. It demonstrates how to browse and read the S3 files as a local regular files.
 ![CloudTier S3 Storage Tiering Demo](https://www.easefilter.com/images/CloudTierS3Demo.PNG)
@@ -23,7 +23,7 @@ A stub file looks and acts like a regular file. It has the same file attributes 
 ## EaseFilter File System Filter Driver SDK Reference
 | Product Name | Description |
 | --- | --- |
-| [Storage Tiering SDK](https://www.easefilter.com/cloud/storage-tiering-sdk.htm) | EaseFilter Storage Tiering Filter Driver SDK Introduction. |
+| [CloudTier Storage Tiering SDK](https://www.easefilter.com/cloud/storage-tiering-sdk.htm) | EaseFilter Storage Tiering Filter Driver SDK Introduction. |
 | [File Monitor SDK](https://www.easefilter.com/kb/file-monitor-filter-driver-sdk.htm) | EaseFilter File Monitor Filter Driver SDK Introduction. |
 | [File Control SDK](https://www.easefilter.com/kb/file-control-file-security-sdk.htm) | EaseFilter File Control Filter Driver SDK Introduction. |
 | [File Encryption SDK](https://www.easefilter.com/kb/transparent-file-encryption-filter-driver-sdk.htm) | EaseFilter Transparent File Encryption Filter Driver SDK Introduction. |
