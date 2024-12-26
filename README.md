@@ -20,8 +20,6 @@ A stub file looks and acts like a regular file. It has the same file attributes 
 ![S3 File Explorer](https://www.easefilter.com/images/s3explorer.png)
 8.	Read the S3 files: after the files were uploaded to the S3 cloud storage, you can replace your original file with the stub file based on your retention policies. You can create S3 stub file in S3 explorer. For example, to read the stub file by copying the stub file to another folder, you will see the S3 file will be downloaded to the cache folder from the S3 storage, after that the cache file will be returned to your local file system through the CloudTier filter driver, then the read request to the S3 file will be completed successfully. 
 
-
-
 ## EaseFilter File System Filter Driver SDK Reference
 | Product Name | Description |
 | --- | --- |
@@ -38,6 +36,7 @@ A stub file looks and acts like a regular file. It has the same file attributes 
 | --- | --- |
 | [CloudTier Storage Tiering Demo](https://www.easefilter.com/cloud/cloudtier-storage-tiering-demo.htm) | A HSM File System Filter Driver Demo. |
 | [CloudTier S3 Intelligent Tiering Demo](https://www.easefilter.com/cloud/cloudtier-s3-intelligent-tiering-demo.htm) | CloudTier S3 Intelligent Tiering Demo. |
+| [Amazon S3 File Explorer Demo](https://www.easefilter.com/cloud/s3-browser-demo.htm) | Amazon S3 File Explorer Demo. |
 | [Auto File DRM Encryption](https://www.easefilter.com/kb/auto-file-drm-encryption-tool.htm) | Auto file encryption with DRM data embedded. |
 | [Transparent File Encrypt](https://www.easefilter.com/kb/AutoFileEncryption.htm) | Transparent on access file encryption. |
 | [Secure File Sharing with DRM](https://www.easefilter.com/kb/DRM_Secure_File_Sharing.htm) | Secure encrypted file sharing with digital rights management. |
