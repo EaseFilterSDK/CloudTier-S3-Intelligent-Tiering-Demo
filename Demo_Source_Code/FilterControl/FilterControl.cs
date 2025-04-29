@@ -494,11 +494,8 @@ namespace CloudTier.FilterControl
         {
             try
             {
-                if (null != OnFilterRequest)
-                {
-                    FilterRequestEventArgs filterRequestEventArgs = new FilterRequestEventArgs(sendDataPtr, replyDataPtr);
-                    OnFilterRequest(null, filterRequestEventArgs);
-                }
+                FilterRequestEventArgs filterRequestEventArgs = new FilterRequestEventArgs(sendDataPtr, replyDataPtr);
+                OnFilterRequest(null, filterRequestEventArgs);
             }
             catch (Exception ex)
             {

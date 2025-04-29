@@ -10,7 +10,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Text;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.IO;
+using System.Configuration;
+using System.Collections;
+using System.Xml;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Reflection;
 
@@ -20,10 +29,9 @@ namespace CloudTier.CommonObjects
 
     public class GlobalConfig
     {
-
+       
         static Assembly assembly = System.Reflection.Assembly.GetEntryAssembly();
         public static string AssemblyPath = Path.GetDirectoryName(assembly.Location);
-        public static string AssemblyName = assembly.Location;
 
         //the message output level. It will output the messages which less than this level.
         static EventLevel eventLevel = EventLevel.Information;
@@ -42,43 +50,20 @@ namespace CloudTier.CommonObjects
 
         static int maximumFilterMessages = 5000;
 
-        static string configFileName = ConfigSetting.GetFilePath();       
+        static string configFileName = ConfigSetting.GetFilePath();
 
-        /// <summary>
-        /// rehydrate the stub file on the first read if it is true.
-        /// </summary>
+        //if it was true, when the reparsepoint file was opened with "FILE_OPEN_NO_RECALL", it won't restore data back for read and write.
+        static bool enableNoRecallFlag = false;
+
+        //if this flag is true, the stub file will be rehydrated on first read.
         static bool rehydrateFileOnFirstRead = false;
 
         //if this flag is true, the filter driver will reopen the file when the stub file was rehydrated.
         static bool reOpenFileOneReHydration = false;
-        /// <summary>
-        /// download the whole file to the cache folder, and return the cache file name to the filter driver.
-        /// </summary>
+
         static bool returnCacheFileName = false;
-        /// <summary>
-        /// return the block data which the application requested if it is true.
-        /// </summary>
+
         static bool returnBlockData = true;
-
-        /// <summary>
-        /// the folder to store the cache files
-        /// </summary>
-        static string cacheFolder = AssemblyPath + "\\CacheFolder";
-
-        /// <summary>
-        /// the file name of the virtual folder's file list meta data's file.
-        /// </summary>
-        static string virtualFileListName = "virtualFileList.data";
-
-        /// <summary>
-        /// The cache directory file list life time
-        /// </summary>
-        static private int expireCachedDirectoryListingAfterSeconds = 60;
-
-        /// <summary>
-        /// delete the cached files after x seconds
-        /// </summary>
-        static private int deleteCachedFilesAfterSeconds = 60 * 60;
 
         public static bool isRunning = true;
         public static ManualResetEvent stopEvent = new ManualResetEvent(false);
@@ -98,12 +83,10 @@ namespace CloudTier.CommonObjects
 
             try
             {
-                eventLevel = (EventLevel)ConfigSetting.Get("eventLevel", (int)eventLevel);
-                virtualFileListName = ConfigSetting.Get("virtualFileListName", virtualFileListName);
-                cacheFolder = ConfigSetting.Get("cacheFolder", cacheFolder);
                 filterConnectionThreads = ConfigSetting.Get("filterConnectionThreads", filterConnectionThreads);
                 connectionTimeOut = ConfigSetting.Get("connectionTimeOut", connectionTimeOut);
                 maximumFilterMessages = ConfigSetting.Get("maximumFilterMessages", maximumFilterMessages);
+                enableNoRecallFlag = ConfigSetting.Get("enableNoRecallFlag", enableNoRecallFlag);
                 rehydrateFileOnFirstRead = ConfigSetting.Get("rehydrateFileOnFirstRead", rehydrateFileOnFirstRead);
                 returnCacheFileName = ConfigSetting.Get("returnCacheFileName", returnCacheFileName);
                 returnBlockData = ConfigSetting.Get("returnBlockData", returnBlockData);
@@ -122,7 +105,7 @@ namespace CloudTier.CommonObjects
         {
             isRunning = false;
             stopEvent.Set();
-           
+
         }      
 
         public static string LicenseKey
@@ -131,15 +114,17 @@ namespace CloudTier.CommonObjects
             {
                 //Purchase a license key with the link: http://www.easefilter.com/Order.htm
                 //Email us to request a trial key: info@easefilter.com //free email is not accepted.
+                string licenseKey = "";
 
-                //for demo code.
                 if (string.IsNullOrEmpty(licenseKey))
                 {
                     System.Windows.Forms.MessageBox.Show("You don't have a valid license key, Please contact support@easefilter.com to get a trial key.", "LicenseKey",
                         System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                 }
 
+
                 return licenseKey;
+              
             }
             set
             {
@@ -206,7 +191,6 @@ namespace CloudTier.CommonObjects
             set
             {
                 eventLevel = value;
-                ConfigSetting.Set("eventLevel", ((int)value).ToString());
             }
         }
 
@@ -368,68 +352,6 @@ namespace CloudTier.CommonObjects
             }
         }
 
-        /// <summary>
-        /// The cache folder to store the cache files which download from the remote server.
-        /// </summary>
-        public static string CacheFolder
-        {
-            get { return cacheFolder; }
-            set
-            {
-                cacheFolder = value;
-                ConfigSetting.Set("cacheFolder", value.ToString());
-            }
-        }
-
-        /// <summary>
-        /// The file name of the virtual folder file list, includes all files' name, size, attribute, tag data and sub directories name.
-        /// </summary>
-        public static string VirtualFileListName
-        {
-            get { return virtualFileListName; }
-            set
-            {
-                virtualFileListName = value;
-                ConfigSetting.Set("virtualFileListName", value.ToString());
-            }
-        }
-
-        /// <summary>
-        /// The cache dir file info list and cache file life time, if the cache directory file list or
-        /// cache file laste write time greater than the value, it needs to re-download from the server, 
-        /// or it will use the local data.
-        /// </summary>
-        static public int ExpireCachedDirectoryListingAfterSeconds
-        {
-            get
-            {
-                return expireCachedDirectoryListingAfterSeconds;
-            }
-            set
-            {
-                expireCachedDirectoryListingAfterSeconds = value;
-                ConfigSetting.Set("expireCachedDirectoryListingAfterSeconds", expireCachedDirectoryListingAfterSeconds.ToString());
-            }
-        }
-
-
-        /// <summary>
-        /// delete the cached files after it was created in seconds x
-        /// </summary>
-        static public int DeleteCachedFilesAfterSeconds
-        {
-            get
-            {
-                return deleteCachedFilesAfterSeconds;
-            }
-            set
-            {
-                deleteCachedFilesAfterSeconds = value;
-                ConfigSetting.Set("deleteCachedFilesAfterSeconds", deleteCachedFilesAfterSeconds.ToString());
-            }
-        }
-
-
-
+       
     }
 }
